@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .loading {
+            margin: 30px 0;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .redirect-text {
+            color: #718096;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+    
+    <!-- ✅ Яндекс.Метрика -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        // ✅ ЗАМЕНИ НА СВОЙ НОМЕР СЧЁТЧИКА
+        ym(105076363, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/105076363" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Яндекс.Метрика -->
+</head>
+<body>
+    <div class="container">
+        <div class="logo">▶️</div>
+        
+        <h1>YouTube Downloader Bot</h1>
+        <p class="subtitle">Переходим в Telegram...</p>
+        
+        <div class="loading">
+            <div class="spinner"></div>
+        </div>
+        
+        <p class="redirect-text">
+            Если переход не произошёл автоматически,<br>
+            <a href="https://t.me/youtube1fastbot" id="manualLink">нажмите здесь</a>
+        </p>
+    </div>
+
+    <script>
+        // ✅ НАСТРОЙКИ - ЗАМЕНИ НА СВОИ
+        const BOT_USERNAME = 'youtube1fastbot';  // Например: youtube_dl_bot
+        const METRIKA_COUNTER = '105076363';        // Номер счётчика
+        const REDIRECT_DELAY = 1500;               // Задержка перед редиректом (мс)
+        
+        // Формируем ссылку на бота
+        const botUrl = `https://t.me/${BOT_USERNAME}`;
+        document.getElementById('manualLink').href = botUrl;
+        
+        // ✅ Отправляем цель "открыл Telegram" в Метрику
+        function sendGoal() {
+            if (typeof ym !== 'undefined') {
+                ym(METRIKA_COUNTER, 'reachGoal', 'telegram_click');
+                console.log('✅ Goal sent: telegram_click');
+            }
+        }
+        
+        // ✅ Функция редиректа
+        function redirectToBot() {
+            // Отправляем цель
+            sendGoal();
+            
+            // Ждём немного чтобы цель успела отправиться
+            setTimeout(function() {
+                // Редирект
+                window.location.href = botUrl;
+            }, 300);
+        }
+        
+        // ✅ Запускаем редирект через заданную задержку
+        setTimeout(redirectToBot, REDIRECT_DELAY);
+        
+        // ✅ Обработчик на случай если пользователь кликнет на ссылку
+        document.getElementById('manualLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            sendGoal();
+            setTimeout(function() {
+                window.location.href = botUrl;
+            }, 300);
+        });
+    </script>
+</body>
+</html>
